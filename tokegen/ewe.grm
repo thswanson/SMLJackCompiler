@@ -1,0 +1,140 @@
+(* ewe.grm - parser spec *)
+
+open eweAS;
+
+%%
+%name ewe (* ewe becomes a prefix in functions *)
+%verbose
+%eop EOF
+%pos int
+%pure (* no side-effects in actions *)
+
+%term EOF
+    | Assign
+    | Equate
+    | Colon
+    | Comma
+    | LeftParen
+    | RightParen
+    | GreaterEqual
+    | Greater
+    | LessEqual
+    | Less
+    | Equal
+    | NotEqual
+    | Plus
+    | Sub
+    | Mul
+    | Divide
+    | Modulo
+    | LeftBracket
+    | RightBracket
+    | Integer of int
+    | Identifier of string
+    | If
+    | Then
+    | Goto
+    | ReadInt
+    | WriteInt
+    | ReadStr
+    | String of string
+    | WriteStr
+    | Halt
+    | Break
+    | M
+    | PC
+
+%nonterm Prog of Instruction list
+       | Exec of Instruction list
+       | Equates of Instruction list
+       | InstrLab of Instruction
+       | Instr of Instruction
+       | MemRef of MemoryRef
+       | Condition of Cond
+
+%%
+
+Prog : Exec Equates EOF                    (Exec@Equates)
+
+Exec : InstrLab                            ([InstrLab])
+
+     | InstrLab Exec                       ([InstrLab]@Exec)
+
+InstrLab : Identifier Colon InstrLab       (label'(Identifier,InstrLab))
+
+         | Instr                           (Instr)
+
+Instr : MemRef Assign Integer              (store'(MemRef,Integer))
+ 
+      | MemRef Assign String               (storeString'(MemRef,String))
+
+      | MemRef Assign PC Plus Integer      (storePC'(MemRef1,Integer))
+
+      | PC Assign MemRef                   (restorePC'(MemRef))
+
+      | MemRef Assign MemRef               (move'(MemRef1,MemRef2))
+
+      | MemRef Assign MemRef Plus MemRef   (add'(MemRef1,MemRef2,MemRef3))
+
+      | MemRef Assign MemRef Sub MemRef    (sub'(MemRef1,MemRef2,MemRef3))
+
+      | MemRef Assign MemRef Mul MemRef    (mul'(MemRef1,MemRef2,MemRef3))
+
+      | MemRef Assign MemRef Divide MemRef (div'(MemRef1,MemRef2,MemRef3))
+
+      | MemRef Assign MemRef Modulo MemRef (mod'(MemRef1,MemRef2,MemRef3))
+
+      | MemRef Assign
+          M LeftBracket MemRef Plus Integer RightBracket
+                                           (indRef'(MemRef1,MemRef2,Integer))
+
+      | M LeftBracket MemRef Plus Integer RightBracket Assign
+          MemRef          
+					   (indStore'(MemRef1,Integer,MemRef2))
+
+      | ReadInt LeftParen MemRef RightParen
+                                           (readInt'(MemRef))
+
+      | WriteInt LeftParen MemRef RightParen
+                                           (writeInt'(MemRef))
+
+      | ReadStr LeftParen MemRef Comma MemRef RightParen
+                                           (readStr'(MemRef1,MemRef2))
+
+      | WriteStr LeftParen MemRef RightParen         
+                                           (writeStr'(MemRef))
+
+      | Goto Integer                       (goto'(Integer))
+
+      | Goto Identifier                    (gotolab'(Identifier))
+
+      | If MemRef Condition MemRef Then Goto Integer
+                                           (if'(Condition,MemRef1,MemRef2,Integer))
+
+      | If MemRef Condition MemRef Then Goto Identifier
+                                           (iflab'(Condition,MemRef1,MemRef2,Identifier))
+
+      | Halt                               (halt')
+
+      | Break                              (break')
+
+Equates :                                  ([])
+
+        | Equate Identifier M LeftBracket Integer RightBracket Equates 
+                                           ([memdef'(Identifier,Integer)]@Equates)
+
+MemRef : M LeftBracket Integer RightBracket 
+					   (memref'(Integer))
+
+       | Identifier			   (memrefId'(Identifier))
+
+Condition : GreaterEqual                   (greaterEq')
+          | Greater			   (greater')
+          | LessEqual                      (lessEq')
+          | Less                           (less')
+          | Equal                          (eq')
+          | NotEqual                       (neq')
+
+
+
+

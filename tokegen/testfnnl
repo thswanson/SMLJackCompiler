@@ -1,0 +1,7 @@
+let val y = 6
+in
+  let fun f(x) = x + y
+  in
+	f(7)
+  end
+end

@@ -1,0 +1,200 @@
+(* calc.grm - parser spec *)
+(*https://people.mpi-sws.org/~rossberg/sml.html*)
+
+open calcAS;
+
+%%
+%name calc (* calc becomes a prefix in functions *)
+%verbose
+%eop EOF
+%pos int
+%nodefault
+%pure (* no side-effects in actions *)
+%term EOF
+    | Class of string
+    | Constructor of string
+    | Function of string
+    | Method of string
+    | Field of string
+    | Static of string
+    | Var of string
+    | Int of string
+    | Char of string
+    | Boolean of string
+    | Void of string
+    | True of string
+    | False of string
+    | Null of string
+    | This of string
+    | Let of string
+    | Do of string
+    | If of string
+    | Else of string
+    | While of string
+    | Return of string
+    | IntConstant of int
+    | StringConstant of string
+    | Identifier of string
+    | LCurly
+    | RCurly
+    | LSquare
+    | RSquare
+    | Period
+    | Comma
+    | SemiColon
+    | Ampersand
+    | Pipe
+    | LParen
+    | RParen
+	  | Equals
+    | Plus
+    | Minus
+    | Times
+    | Div
+    | LessThan
+    | GreaterThan
+    | Tilde
+
+
+
+
+%nonterm ClassDec of AST
+       | ClassVarDec of (string * string * string list)
+       | ClassVarDecList of (string * string * string list) list
+       | Type of string
+       | SubroutineDec of AST
+       | SubroutineDecList of AST list
+       | ParameterList of (string * string) list
+       | Parameter of (string * string)
+       | SubroutineBody of AST
+       | VarDecList of (string * string list) list
+       | VarDec of (string * string list)
+       | VarNameList of string list
+       | IdentifierList of string list
+       | Statements of AST list
+       | Statement of AST
+       | LetStatement of AST
+       | IfStatement of AST
+       | WhileStatement of AST
+       | DoStatement of AST
+       | ReturnStatement of AST
+       | Expression of AST
+       | Term of AST
+       | SubroutineCall of AST
+       | ExpressionList of AST list
+       | KeywordConstant of AST
+
+
+
+
+(*Program Structure*)(*Need class var dec list and subroutine dec list*)(*statments needs a basecase*)
+%%
+
+ClassDec : Class Identifier LCurly ClassVarDecList SubroutineDecList RCurly      (class'(Identifier,ClassVarDecList,SubroutineDecList))
+
+ClassVarDecList: ClassVarDec ClassVarDecList  (ClassVarDec::ClassVarDecList)
+              | ([])
+
+ClassVarDec: Static Type VarNameList SemiColon                                   ((Static, Type, VarNameList))
+            | Field Type VarNameList SemiColon                                   ((Field, Type, VarNameList))
+
+
+
+VarNameList : Identifier                                                         ([Identifier])
+            | Identifier Comma VarNameList                                       (Identifier::VarNameList)
+            | ([])
+            (*May Need to have a null case*)
+
+Type : Int     ("int")
+    | Char     ("char")
+    | Boolean   ("bool")
+    | Void     ("void")
+    | Identifier (Identifier)
+
+SubroutineDecList: SubroutineDec SubroutineDecList (SubroutineDec::SubroutineDecList)
+                 | ([])
+
+SubroutineDec : Constructor Type Identifier LParen ParameterList RParen LCurly VarDecList Statements RCurly    (constructor'(Type, Identifier, ParameterList, VarDecList, Statements))
+              | Function Type Identifier LParen ParameterList RParen LCurly VarDecList Statements RCurly (function'(Type, Identifier, ParameterList, VarDecList, Statements))
+              | Method Type Identifier LParen ParameterList RParen LCurly VarDecList Statements RCurly   (method'(Type, Identifier, ParameterList, VarDecList, Statements))
+
+
+ParameterList : Parameter     ([Parameter])
+              | Parameter Comma ParameterList   (Parameter::ParameterList)
+              | ([])
+
+Parameter : Type Identifier      ((Type, Identifier))
+
+VarDecList : VarDec VarDecList  (VarDec::VarDecList)
+          | ([])
+
+VarDec :  Var Type IdentifierList SemiColon  ((Type, IdentifierList))
+
+IdentifierList : Identifier   ([Identifier])
+              | Identifier Comma IdentifierList   (Identifier::IdentifierList)
+              | ([])
+
+
+(*Statements----------------------------------------------------------*)
+
+Statements : Statement Statements     (Statement::Statements)
+          | Statement                 ([Statement])
+
+Statement : LetStatement          (letstatement'(LetStatement))
+          | IfStatement          (ifstatement'(IfStatement))
+          | WhileStatement        (whilestatement'(WhileStatement))
+          | DoStatement           (dostatement'(DoStatement))
+          | ReturnStatement       (returnstatement'(ReturnStatement))
+
+
+
+LetStatement : Let Identifier Equals Expression SemiColon                                (letstate'(Identifier, Expression))
+             | Let Identifier LSquare Expression RSquare Equals Expression SemiColon     (letexpr'(Identifier, Expression1, Expression2))
+
+IfStatement : If LParen Expression RParen LCurly Statements RCurly                                  (if'(Expression, Statements))
+            | If LParen Expression RParen LCurly Statements RCurly Else LCurly Statements RCurly    (ifelse'(Expression, Statements1, Statements2))
+
+WhileStatement : While LParen Expression RParen LCurly Statements RCurly        (while'(Expression, Statements))
+
+DoStatement : Do SubroutineCall SemiColon      (do'(SubroutineCall))
+
+ReturnStatement : Return SemiColon            (returnvoid')
+                | Return Expression SemiColon (return'(Expression))
+
+(*Expressions ----------------------------------------------------------*)
+
+Expression : Term                                 (Term)
+           | Term Plus Expression                 (add'(Term,Expression))
+           | Term Minus Expression                (sub'(Term,Expression))
+           | Term Times Expression                (mul'(Term,Expression))
+           | Term Div Expression                  (div'(Term,Expression))
+           | Term Ampersand Expression            (and'(Term,Expression))
+           | Term Pipe Expression                 (or'(Term,Expression))
+           | Term LessThan Expression             (lt'(Term,Expression))
+           | Term GreaterThan Expression          (gt'(Term,Expression))
+           | Term Equals Expression               (equal'(Term,Expression))
+           | Minus Term                           (negate'(Term))
+           | Tilde Term                           (not'(Term))
+
+
+
+Term : IntConstant    (integer'(IntConstant))
+     | StringConstant   (string'(StringConstant))
+     | KeywordConstant  (KeywordConstant)
+     | Identifier LSquare Expression RSquare    (idarray'(Identifier,Expression))
+     | SubroutineCall                            (subroutine'(SubroutineCall))
+     | LParen Expression RParen                  (parenexpr'(Expression))
+     | Identifier                                (id'(Identifier))
+
+
+SubroutineCall : Identifier LParen ExpressionList RParen                     (subcall1'(Identifier, ExpressionList))
+               | Identifier Period Identifier LParen ExpressionList RParen  (subcall2'(Identifier1, Identifier2, ExpressionList))
+
+ExpressionList : Expression                         ([Expression])
+               | Expression Comma ExpressionList    (Expression::ExpressionList)
+               | ([])
+
+KeywordConstant : True   (true')
+                | False  (false')
+                | Null   (null')
+                | This   (this')

@@ -1,0 +1,1048 @@
+
+state 0:
+
+	Prog : . Exec Equates EOF 
+
+	Identifier	shift 15
+	If	shift 14
+	Goto	shift 13
+	ReadInt	shift 12
+	WriteInt	shift 11
+	ReadStr	shift 10
+	WriteStr	shift 9
+	Halt	shift 8
+	Break	shift 7
+	M	shift 6
+	PC	shift 5
+
+	Prog	goto 94
+	Exec	goto 4
+	InstrLab	goto 3
+	Instr	goto 2
+	MemRef	goto 1
+
+	.	error
+
+
+state 1:
+
+	Instr : MemRef . Assign Integer 
+	Instr : MemRef . Assign String 
+	Instr : MemRef . Assign PC Plus Integer 
+	Instr : MemRef . Assign MemRef 
+	Instr : MemRef . Assign MemRef Plus MemRef 
+	Instr : MemRef . Assign MemRef Sub MemRef 
+	Instr : MemRef . Assign MemRef Mul MemRef 
+	Instr : MemRef . Assign MemRef Divide MemRef 
+	Instr : MemRef . Assign MemRef Modulo MemRef 
+	Instr : MemRef . Assign M LeftBracket MemRef Plus Integer RightBracket 
+
+	Assign	shift 16
+
+
+	.	error
+
+
+state 2:
+
+	InstrLab : Instr .  (reduce by rule 4)
+
+
+
+	.	reduce by rule 4
+
+
+state 3:
+
+	Exec : InstrLab .  (reduce by rule 1)
+	Exec : InstrLab . Exec 
+
+	Identifier	shift 15
+	If	shift 14
+	Goto	shift 13
+	ReadInt	shift 12
+	WriteInt	shift 11
+	ReadStr	shift 10
+	WriteStr	shift 9
+	Halt	shift 8
+	Break	shift 7
+	M	shift 6
+	PC	shift 5
+
+	Exec	goto 17
+	InstrLab	goto 3
+	Instr	goto 2
+	MemRef	goto 1
+
+	.	reduce by rule 1
+
+
+state 4:
+
+	Prog : Exec . Equates EOF 
+
+	Equate	shift 19
+
+	Equates	goto 18
+
+	.	reduce by rule 27
+
+
+state 5:
+
+	Instr : PC . Assign MemRef 
+
+	Assign	shift 20
+
+
+	.	error
+
+
+state 6:
+
+	Instr : M . LeftBracket MemRef Plus Integer RightBracket Assign MemRef 
+	MemRef : M . LeftBracket Integer RightBracket 
+
+	LeftBracket	shift 21
+
+
+	.	error
+
+
+state 7:
+
+	Instr : Break .  (reduce by rule 26)
+
+
+
+	.	reduce by rule 26
+
+
+state 8:
+
+	Instr : Halt .  (reduce by rule 25)
+
+
+
+	.	reduce by rule 25
+
+
+state 9:
+
+	Instr : WriteStr . LeftParen MemRef RightParen 
+
+	LeftParen	shift 22
+
+
+	.	error
+
+
+state 10:
+
+	Instr : ReadStr . LeftParen MemRef Comma MemRef RightParen 
+
+	LeftParen	shift 23
+
+
+	.	error
+
+
+state 11:
+
+	Instr : WriteInt . LeftParen MemRef RightParen 
+
+	LeftParen	shift 24
+
+
+	.	error
+
+
+state 12:
+
+	Instr : ReadInt . LeftParen MemRef RightParen 
+
+	LeftParen	shift 25
+
+
+	.	error
+
+
+state 13:
+
+	Instr : Goto . Integer 
+	Instr : Goto . Identifier 
+
+	Integer	shift 27
+	Identifier	shift 26
+
+
+	.	error
+
+
+state 14:
+
+	Instr : If . MemRef Condition MemRef Then Goto Integer 
+	Instr : If . MemRef Condition MemRef Then Goto Identifier 
+
+	Identifier	shift 30
+	M	shift 29
+
+	MemRef	goto 28
+
+	.	error
+
+
+state 15:
+
+	InstrLab : Identifier . Colon InstrLab 
+	MemRef : Identifier .  (reduce by rule 30)
+
+	Colon	shift 31
+
+
+	.	reduce by rule 30
+
+
+state 16:
+
+	Instr : MemRef Assign . Integer 
+	Instr : MemRef Assign . String 
+	Instr : MemRef Assign . PC Plus Integer 
+	Instr : MemRef Assign . MemRef 
+	Instr : MemRef Assign . MemRef Plus MemRef 
+	Instr : MemRef Assign . MemRef Sub MemRef 
+	Instr : MemRef Assign . MemRef Mul MemRef 
+	Instr : MemRef Assign . MemRef Divide MemRef 
+	Instr : MemRef Assign . MemRef Modulo MemRef 
+	Instr : MemRef Assign . M LeftBracket MemRef Plus Integer RightBracket 
+
+	Integer	shift 36
+	Identifier	shift 30
+	String	shift 35
+	M	shift 34
+	PC	shift 33
+
+	MemRef	goto 32
+
+	.	error
+
+
+state 17:
+
+	Exec : InstrLab Exec .  (reduce by rule 2)
+
+
+
+	.	reduce by rule 2
+
+
+state 18:
+
+	Prog : Exec Equates . EOF 
+
+	EOF	shift 37
+
+
+	.	error
+
+
+state 19:
+
+	Equates : Equate . Identifier M LeftBracket Integer RightBracket Equates 
+
+	Identifier	shift 38
+
+
+	.	error
+
+
+state 20:
+
+	Instr : PC Assign . MemRef 
+
+	Identifier	shift 30
+	M	shift 29
+
+	MemRef	goto 39
+
+	.	error
+
+
+state 21:
+
+	Instr : M LeftBracket . MemRef Plus Integer RightBracket Assign MemRef 
+	MemRef : M LeftBracket . Integer RightBracket 
+
+	Integer	shift 41
+	Identifier	shift 30
+	M	shift 29
+
+	MemRef	goto 40
+
+	.	error
+
+
+state 22:
+
+	Instr : WriteStr LeftParen . MemRef RightParen 
+
+	Identifier	shift 30
+	M	shift 29
+
+	MemRef	goto 42
+
+	.	error
+
+
+state 23:
+
+	Instr : ReadStr LeftParen . MemRef Comma MemRef RightParen 
+
+	Identifier	shift 30
+	M	shift 29
+
+	MemRef	goto 43
+
+	.	error
+
+
+state 24:
+
+	Instr : WriteInt LeftParen . MemRef RightParen 
+
+	Identifier	shift 30
+	M	shift 29
+
+	MemRef	goto 44
+
+	.	error
+
+
+state 25:
+
+	Instr : ReadInt LeftParen . MemRef RightParen 
+
+	Identifier	shift 30
+	M	shift 29
+
+	MemRef	goto 45
+
+	.	error
+
+
+state 26:
+
+	Instr : Goto Identifier .  (reduce by rule 22)
+
+
+
+	.	reduce by rule 22
+
+
+state 27:
+
+	Instr : Goto Integer .  (reduce by rule 21)
+
+
+
+	.	reduce by rule 21
+
+
+state 28:
+
+	Instr : If MemRef . Condition MemRef Then Goto Integer 
+	Instr : If MemRef . Condition MemRef Then Goto Identifier 
+
+	GreaterEqual	shift 52
+	Greater	shift 51
+	LessEqual	shift 50
+	Less	shift 49
+	Equal	shift 48
+	NotEqual	shift 47
+
+	Condition	goto 46
+
+	.	error
+
+
+state 29:
+
+	MemRef : M . LeftBracket Integer RightBracket 
+
+	LeftBracket	shift 53
+
+
+	.	error
+
+
+state 30:
+
+	MemRef : Identifier .  (reduce by rule 30)
+
+
+
+	.	reduce by rule 30
+
+
+state 31:
+
+	InstrLab : Identifier Colon . InstrLab 
+
+	Identifier	shift 15
+	If	shift 14
+	Goto	shift 13
+	ReadInt	shift 12
+	WriteInt	shift 11
+	ReadStr	shift 10
+	WriteStr	shift 9
+	Halt	shift 8
+	Break	shift 7
+	M	shift 6
+	PC	shift 5
+
+	InstrLab	goto 54
+	Instr	goto 2
+	MemRef	goto 1
+
+	.	error
+
+
+state 32:
+
+	Instr : MemRef Assign MemRef .  (reduce by rule 9)
+	Instr : MemRef Assign MemRef . Plus MemRef 
+	Instr : MemRef Assign MemRef . Sub MemRef 
+	Instr : MemRef Assign MemRef . Mul MemRef 
+	Instr : MemRef Assign MemRef . Divide MemRef 
+	Instr : MemRef Assign MemRef . Modulo MemRef 
+
+	Plus	shift 59
+	Sub	shift 58
+	Mul	shift 57
+	Divide	shift 56
+	Modulo	shift 55
+
+
+	.	reduce by rule 9
+
+
+state 33:
+
+	Instr : MemRef Assign PC . Plus Integer 
+
+	Plus	shift 60
+
+
+	.	error
+
+
+state 34:
+
+	Instr : MemRef Assign M . LeftBracket MemRef Plus Integer RightBracket 
+	MemRef : M . LeftBracket Integer RightBracket 
+
+	LeftBracket	shift 61
+
+
+	.	error
+
+
+state 35:
+
+	Instr : MemRef Assign String .  (reduce by rule 6)
+
+
+
+	.	reduce by rule 6
+
+
+state 36:
+
+	Instr : MemRef Assign Integer .  (reduce by rule 5)
+
+
+
+	.	reduce by rule 5
+
+
+state 37:
+
+	Prog : Exec Equates EOF .  (reduce by rule 0)
+
+
+
+	.	reduce by rule 0
+
+
+state 38:
+
+	Equates : Equate Identifier . M LeftBracket Integer RightBracket Equates 
+
+	M	shift 62
+
+
+	.	error
+
+
+state 39:
+
+	Instr : PC Assign MemRef .  (reduce by rule 8)
+
+
+
+	.	reduce by rule 8
+
+
+state 40:
+
+	Instr : M LeftBracket MemRef . Plus Integer RightBracket Assign MemRef 
+
+	Plus	shift 63
+
+
+	.	error
+
+
+state 41:
+
+	MemRef : M LeftBracket Integer . RightBracket 
+
+	RightBracket	shift 64
+
+
+	.	error
+
+
+state 42:
+
+	Instr : WriteStr LeftParen MemRef . RightParen 
+
+	RightParen	shift 65
+
+
+	.	error
+
+
+state 43:
+
+	Instr : ReadStr LeftParen MemRef . Comma MemRef RightParen 
+
+	Comma	shift 66
+
+
+	.	error
+
+
+state 44:
+
+	Instr : WriteInt LeftParen MemRef . RightParen 
+
+	RightParen	shift 67
+
+
+	.	error
+
+
+state 45:
+
+	Instr : ReadInt LeftParen MemRef . RightParen 
+
+	RightParen	shift 68
+
+
+	.	error
+
+
+state 46:
+
+	Instr : If MemRef Condition . MemRef Then Goto Integer 
+	Instr : If MemRef Condition . MemRef Then Goto Identifier 
+
+	Identifier	shift 30
+	M	shift 29
+
+	MemRef	goto 69
+
+	.	error
+
+
+state 47:
+
+	Condition : NotEqual .  (reduce by rule 36)
+
+
+
+	.	reduce by rule 36
+
+
+state 48:
+
+	Condition : Equal .  (reduce by rule 35)
+
+
+
+	.	reduce by rule 35
+
+
+state 49:
+
+	Condition : Less .  (reduce by rule 34)
+
+
+
+	.	reduce by rule 34
+
+
+state 50:
+
+	Condition : LessEqual .  (reduce by rule 33)
+
+
+
+	.	reduce by rule 33
+
+
+state 51:
+
+	Condition : Greater .  (reduce by rule 32)
+
+
+
+	.	reduce by rule 32
+
+
+state 52:
+
+	Condition : GreaterEqual .  (reduce by rule 31)
+
+
+
+	.	reduce by rule 31
+
+
+state 53:
+
+	MemRef : M LeftBracket . Integer RightBracket 
+
+	Integer	shift 41
+
+
+	.	error
+
+
+state 54:
+
+	InstrLab : Identifier Colon InstrLab .  (reduce by rule 3)
+
+
+
+	.	reduce by rule 3
+
+
+state 55:
+
+	Instr : MemRef Assign MemRef Modulo . MemRef 
+
+	Identifier	shift 30
+	M	shift 29
+
+	MemRef	goto 70
+
+	.	error
+
+
+state 56:
+
+	Instr : MemRef Assign MemRef Divide . MemRef 
+
+	Identifier	shift 30
+	M	shift 29
+
+	MemRef	goto 71
+
+	.	error
+
+
+state 57:
+
+	Instr : MemRef Assign MemRef Mul . MemRef 
+
+	Identifier	shift 30
+	M	shift 29
+
+	MemRef	goto 72
+
+	.	error
+
+
+state 58:
+
+	Instr : MemRef Assign MemRef Sub . MemRef 
+
+	Identifier	shift 30
+	M	shift 29
+
+	MemRef	goto 73
+
+	.	error
+
+
+state 59:
+
+	Instr : MemRef Assign MemRef Plus . MemRef 
+
+	Identifier	shift 30
+	M	shift 29
+
+	MemRef	goto 74
+
+	.	error
+
+
+state 60:
+
+	Instr : MemRef Assign PC Plus . Integer 
+
+	Integer	shift 75
+
+
+	.	error
+
+
+state 61:
+
+	Instr : MemRef Assign M LeftBracket . MemRef Plus Integer RightBracket 
+	MemRef : M LeftBracket . Integer RightBracket 
+
+	Integer	shift 41
+	Identifier	shift 30
+	M	shift 29
+
+	MemRef	goto 76
+
+	.	error
+
+
+state 62:
+
+	Equates : Equate Identifier M . LeftBracket Integer RightBracket Equates 
+
+	LeftBracket	shift 77
+
+
+	.	error
+
+
+state 63:
+
+	Instr : M LeftBracket MemRef Plus . Integer RightBracket Assign MemRef 
+
+	Integer	shift 78
+
+
+	.	error
+
+
+state 64:
+
+	MemRef : M LeftBracket Integer RightBracket .  (reduce by rule 29)
+
+
+
+	.	reduce by rule 29
+
+
+state 65:
+
+	Instr : WriteStr LeftParen MemRef RightParen .  (reduce by rule 20)
+
+
+
+	.	reduce by rule 20
+
+
+state 66:
+
+	Instr : ReadStr LeftParen MemRef Comma . MemRef RightParen 
+
+	Identifier	shift 30
+	M	shift 29
+
+	MemRef	goto 79
+
+	.	error
+
+
+state 67:
+
+	Instr : WriteInt LeftParen MemRef RightParen .  (reduce by rule 18)
+
+
+
+	.	reduce by rule 18
+
+
+state 68:
+
+	Instr : ReadInt LeftParen MemRef RightParen .  (reduce by rule 17)
+
+
+
+	.	reduce by rule 17
+
+
+state 69:
+
+	Instr : If MemRef Condition MemRef . Then Goto Integer 
+	Instr : If MemRef Condition MemRef . Then Goto Identifier 
+
+	Then	shift 80
+
+
+	.	error
+
+
+state 70:
+
+	Instr : MemRef Assign MemRef Modulo MemRef .  (reduce by rule 14)
+
+
+
+	.	reduce by rule 14
+
+
+state 71:
+
+	Instr : MemRef Assign MemRef Divide MemRef .  (reduce by rule 13)
+
+
+
+	.	reduce by rule 13
+
+
+state 72:
+
+	Instr : MemRef Assign MemRef Mul MemRef .  (reduce by rule 12)
+
+
+
+	.	reduce by rule 12
+
+
+state 73:
+
+	Instr : MemRef Assign MemRef Sub MemRef .  (reduce by rule 11)
+
+
+
+	.	reduce by rule 11
+
+
+state 74:
+
+	Instr : MemRef Assign MemRef Plus MemRef .  (reduce by rule 10)
+
+
+
+	.	reduce by rule 10
+
+
+state 75:
+
+	Instr : MemRef Assign PC Plus Integer .  (reduce by rule 7)
+
+
+
+	.	reduce by rule 7
+
+
+state 76:
+
+	Instr : MemRef Assign M LeftBracket MemRef . Plus Integer RightBracket 
+
+	Plus	shift 81
+
+
+	.	error
+
+
+state 77:
+
+	Equates : Equate Identifier M LeftBracket . Integer RightBracket Equates 
+
+	Integer	shift 82
+
+
+	.	error
+
+
+state 78:
+
+	Instr : M LeftBracket MemRef Plus Integer . RightBracket Assign MemRef 
+
+	RightBracket	shift 83
+
+
+	.	error
+
+
+state 79:
+
+	Instr : ReadStr LeftParen MemRef Comma MemRef . RightParen 
+
+	RightParen	shift 84
+
+
+	.	error
+
+
+state 80:
+
+	Instr : If MemRef Condition MemRef Then . Goto Integer 
+	Instr : If MemRef Condition MemRef Then . Goto Identifier 
+
+	Goto	shift 85
+
+
+	.	error
+
+
+state 81:
+
+	Instr : MemRef Assign M LeftBracket MemRef Plus . Integer RightBracket 
+
+	Integer	shift 86
+
+
+	.	error
+
+
+state 82:
+
+	Equates : Equate Identifier M LeftBracket Integer . RightBracket Equates 
+
+	RightBracket	shift 87
+
+
+	.	error
+
+
+state 83:
+
+	Instr : M LeftBracket MemRef Plus Integer RightBracket . Assign MemRef 
+
+	Assign	shift 88
+
+
+	.	error
+
+
+state 84:
+
+	Instr : ReadStr LeftParen MemRef Comma MemRef RightParen .  (reduce by rule 19)
+
+
+
+	.	reduce by rule 19
+
+
+state 85:
+
+	Instr : If MemRef Condition MemRef Then Goto . Integer 
+	Instr : If MemRef Condition MemRef Then Goto . Identifier 
+
+	Integer	shift 90
+	Identifier	shift 89
+
+
+	.	error
+
+
+state 86:
+
+	Instr : MemRef Assign M LeftBracket MemRef Plus Integer . RightBracket 
+
+	RightBracket	shift 91
+
+
+	.	error
+
+
+state 87:
+
+	Equates : Equate Identifier M LeftBracket Integer RightBracket . Equates 
+
+	Equate	shift 19
+
+	Equates	goto 92
+
+	.	reduce by rule 27
+
+
+state 88:
+
+	Instr : M LeftBracket MemRef Plus Integer RightBracket Assign . MemRef 
+
+	Identifier	shift 30
+	M	shift 29
+
+	MemRef	goto 93
+
+	.	error
+
+
+state 89:
+
+	Instr : If MemRef Condition MemRef Then Goto Identifier .  (reduce by rule 24)
+
+
+
+	.	reduce by rule 24
+
+
+state 90:
+
+	Instr : If MemRef Condition MemRef Then Goto Integer .  (reduce by rule 23)
+
+
+
+	.	reduce by rule 23
+
+
+state 91:
+
+	Instr : MemRef Assign M LeftBracket MemRef Plus Integer RightBracket .  (reduce by rule 15)
+
+
+
+	.	reduce by rule 15
+
+
+state 92:
+
+	Equates : Equate Identifier M LeftBracket Integer RightBracket Equates .  (reduce by rule 28)
+
+
+
+	.	reduce by rule 28
+
+
+state 93:
+
+	Instr : M LeftBracket MemRef Plus Integer RightBracket Assign MemRef .  (reduce by rule 16)
+
+
+
+	.	reduce by rule 16
+
+
+state 94:
+
+
+	EOF	accept
+
+
+	.	error
+
+83 of 219 action table entries left after compaction
+32 goto table entries

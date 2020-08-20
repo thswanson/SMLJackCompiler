@@ -1,0 +1,48 @@
+SP:=100
+PR0 := 0
+PR1 := 0
+PR2 := 0
+PR3 := 0
+PR4 := 0
+PR5 := 0
+PR6 := 0
+PR7 := 0
+PR8 := 0
+PR9 := 0
+cr := 13
+nl := 10
+nullchar:=0
+
+R0:=5
+R1:=4
+R0:=R0+R1
+
+writeInt(R0)
+halt
+
+###### input function ######
+input:  readInt(PR9)		# read an integer into function result register
+SP:=M[SP+1]		# restore the stack pointer
+PC:=PR8			# return from whence you came
+###### output function ######
+output:  writeInt(PR9)		# write the integer in function parameter register
+writeStr(cr)
+SP:=M[SP+1]		# restore the stack pointer
+PC:=PR8			# return from whence you came
+equ PR0 M[0]
+equ PR1 M[1]
+equ PR2 M[2]
+equ PR3 M[3]
+equ PR4 M[4]
+equ PR5 M[5]
+equ PR6 M[6]
+equ PR7 M[7]
+equ PR8 M[8]
+equ PR9 M[9]
+equ MEM M[12]
+equ SP M[13]
+equ cr M[14]
+equ nl M[15]
+equ nullchar M[16]
+equ R0 M[0]
+equ R1 M[1]

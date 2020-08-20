@@ -1,0 +1,7 @@
+let val x = get
+in
+  let val y = get
+  in 
+    if x > y then x else y
+  end
+end

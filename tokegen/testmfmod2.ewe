@@ -1,0 +1,152 @@
+SP:=100
+PR0 := 0
+PR1 := 0
+PR2 := 0
+PR3 := 0
+PR4 := 0
+PR5 := 0
+PR6 := 0
+PR7 := 0
+PR8 := 0
+PR9 := 0
+cr := 13
+nl := 10
+nullchar:=0
+zero:=0
+R0:=1
+M[SP+0]:=R0
+goto L0
+L1: M[SP+2]:=PR0
+M[SP+3]:=PR1
+M[SP+4]:=PR2
+M[SP+5]:=PR3
+M[SP+6]:=PR4
+M[SP+7]:=PR5
+M[SP+8]:=PR6
+M[SP+9]:=PR7
+M[SP+10]:=PR8
+M[SP+11]:=PR9
+goto L2
+L3: M[SP+2]:=PR0
+M[SP+3]:=PR1
+M[SP+4]:=PR2
+M[SP+5]:=PR3
+M[SP+6]:=PR4
+M[SP+7]:=PR5
+M[SP+8]:=PR6
+M[SP+9]:=PR7
+M[SP+10]:=PR8
+M[SP+11]:=PR9
+R1:=SP
+R1:=M[R1+0]
+R1:=M[R1+0]
+R1:=M[R1+0]
+PR9:=R1
+PR0:=M[SP+2]
+PR1:=M[SP+3]
+PR2:=M[SP+4]
+PR3:=M[SP+5]
+PR4:=M[SP+6]
+PR5:=M[SP+7]
+PR6:=M[SP+8]
+PR7:=M[SP+9]
+PR8:=M[SP+10]
+SP:=M[SP+1]
+PC:=PR8
+L2:
+R2:=SP
+R2:=M[R2+11]
+R3:=0
+if R2<>R3 then goto L4
+R4:=SP
+R4:=M[R4+0]
+R4:=M[R4+0]
+PR8 := SP
+M[SP+12] := PR8
+M[SP+13] := SP
+PR9 := R4
+PR8 := 12
+SP := SP+PR8
+PR8 := PC+1
+goto L3
+R4:= PR9
+goto L5
+L4:
+R5:=SP
+R5:=M[R5+11]
+R6:=SP
+R6:=M[R6+11]
+R7:=1
+R6:=R6-R7
+PR8 := SP
+PR8 := M[PR8+0]
+M[SP+12] := PR8
+M[SP+13] := SP
+PR9 := R6
+PR8 := 12
+SP := SP+PR8
+PR8 := PC+1
+goto L1
+R6:= PR9
+R5:=R5*R6
+L5:
+PR9:=R5
+PR0:=M[SP+2]
+PR1:=M[SP+3]
+PR2:=M[SP+4]
+PR3:=M[SP+5]
+PR4:=M[SP+6]
+PR5:=M[SP+7]
+PR6:=M[SP+8]
+PR7:=M[SP+9]
+PR8:=M[SP+10]
+SP:=M[SP+1]
+PC:=PR8
+L0:
+readInt(R8)
+PR8 := SP
+M[SP+1] := PR8
+M[SP+2] := SP
+PR9 := R8
+PR8 := 1
+SP := SP+PR8
+PR8 := PC+1
+goto L1
+R8:= PR9
+writeInt(R8)
+halt
+
+###### input function ######
+input:  readInt(PR9)		# read an integer into function result register
+SP:=M[SP+1]		# restore the stack pointer
+PC:=PR8			# return from whence you came
+###### output function ######
+output:  writeInt(PR9)		# write the integer in function parameter register
+writeStr(cr)
+SP:=M[SP+1]		# restore the stack pointer
+PC:=PR8			# return from whence you came
+equ PR0 M[0]
+equ PR1 M[1]
+equ PR2 M[2]
+equ PR3 M[3]
+equ PR4 M[4]
+equ PR5 M[5]
+equ PR6 M[6]
+equ PR7 M[7]
+equ PR8 M[8]
+equ PR9 M[9]
+equ MEM M[12]
+equ SP M[13]
+equ cr M[14]
+equ nl M[15]
+equ nullchar M[16]
+equ zero M[17]
+equ R0 M[0]
+equ R1 M[0]
+equ R2 M[0]
+equ R3 M[1]
+equ R4 M[0]
+equ R5 M[0]
+equ R6 M[1]
+equ R7 M[2]
+equ R8 M[0]

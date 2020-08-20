@@ -1,0 +1,2483 @@
+
+state 0:
+
+	ClassDec : . Class Identifier LCurly ClassVarDecList SubroutineDecList RCurly 
+
+	Class	shift 1
+
+	ClassDec	goto 164
+
+	.	error
+
+
+state 1:
+
+	ClassDec : Class . Identifier LCurly ClassVarDecList SubroutineDecList RCurly 
+
+	Identifier	shift 2
+
+
+	.	error
+
+
+state 2:
+
+	ClassDec : Class Identifier . LCurly ClassVarDecList SubroutineDecList RCurly 
+
+	LCurly	shift 3
+
+
+	.	error
+
+
+state 3:
+
+	ClassDec : Class Identifier LCurly . ClassVarDecList SubroutineDecList RCurly 
+
+	Constructor	reduce by rule 2
+	Function	reduce by rule 2
+	Method	reduce by rule 2
+	Field	shift 7
+	Static	shift 6
+	RCurly	reduce by rule 2
+
+	ClassVarDec	goto 5
+	ClassVarDecList	goto 4
+
+	.	error
+
+
+state 4:
+
+	ClassDec : Class Identifier LCurly ClassVarDecList . SubroutineDecList RCurly 
+
+	Constructor	shift 12
+	Function	shift 11
+	Method	shift 10
+	RCurly	reduce by rule 14
+
+	SubroutineDec	goto 9
+	SubroutineDecList	goto 8
+
+	.	error
+
+
+state 5:
+
+	ClassVarDecList : ClassVarDec . ClassVarDecList 
+
+	Constructor	reduce by rule 2
+	Function	reduce by rule 2
+	Method	reduce by rule 2
+	Field	shift 7
+	Static	shift 6
+	RCurly	reduce by rule 2
+
+	ClassVarDec	goto 5
+	ClassVarDecList	goto 13
+
+	.	error
+
+
+state 6:
+
+	ClassVarDec : Static . Type VarNameList SemiColon 
+
+	Int	shift 19
+	Char	shift 18
+	Boolean	shift 17
+	Void	shift 16
+	Identifier	shift 15
+
+	Type	goto 14
+
+	.	error
+
+
+state 7:
+
+	ClassVarDec : Field . Type VarNameList SemiColon 
+
+	Int	shift 19
+	Char	shift 18
+	Boolean	shift 17
+	Void	shift 16
+	Identifier	shift 15
+
+	Type	goto 20
+
+	.	error
+
+
+state 8:
+
+	ClassDec : Class Identifier LCurly ClassVarDecList SubroutineDecList . RCurly 
+
+	RCurly	shift 21
+
+
+	.	error
+
+
+state 9:
+
+	SubroutineDecList : SubroutineDec . SubroutineDecList 
+
+	Constructor	shift 12
+	Function	shift 11
+	Method	shift 10
+	RCurly	reduce by rule 14
+
+	SubroutineDec	goto 9
+	SubroutineDecList	goto 22
+
+	.	error
+
+
+state 10:
+
+	SubroutineDec : Method . Type Identifier LParen ParameterList RParen LCurly VarDecList Statements RCurly 
+
+	Int	shift 19
+	Char	shift 18
+	Boolean	shift 17
+	Void	shift 16
+	Identifier	shift 15
+
+	Type	goto 23
+
+	.	error
+
+
+state 11:
+
+	SubroutineDec : Function . Type Identifier LParen ParameterList RParen LCurly VarDecList Statements RCurly 
+
+	Int	shift 19
+	Char	shift 18
+	Boolean	shift 17
+	Void	shift 16
+	Identifier	shift 15
+
+	Type	goto 24
+
+	.	error
+
+
+state 12:
+
+	SubroutineDec : Constructor . Type Identifier LParen ParameterList RParen LCurly VarDecList Statements RCurly 
+
+	Int	shift 19
+	Char	shift 18
+	Boolean	shift 17
+	Void	shift 16
+	Identifier	shift 15
+
+	Type	goto 25
+
+	.	error
+
+
+state 13:
+
+	ClassVarDecList : ClassVarDec ClassVarDecList .  (reduce by rule 1)
+
+	Constructor	reduce by rule 1
+	Function	reduce by rule 1
+	Method	reduce by rule 1
+	RCurly	reduce by rule 1
+
+
+	.	error
+
+
+state 14:
+
+	ClassVarDec : Static Type . VarNameList SemiColon 
+
+	Identifier	shift 27
+	SemiColon	reduce by rule 7
+
+	VarNameList	goto 26
+
+	.	error
+
+
+state 15:
+
+	Type : Identifier .  (reduce by rule 12)
+
+	Identifier	reduce by rule 12
+	SemiColon	reduce by rule 12
+
+
+	.	error
+
+
+state 16:
+
+	Type : Void .  (reduce by rule 11)
+
+	Identifier	reduce by rule 11
+	SemiColon	reduce by rule 11
+
+
+	.	error
+
+
+state 17:
+
+	Type : Boolean .  (reduce by rule 10)
+
+	Identifier	reduce by rule 10
+	SemiColon	reduce by rule 10
+
+
+	.	error
+
+
+state 18:
+
+	Type : Char .  (reduce by rule 9)
+
+	Identifier	reduce by rule 9
+	SemiColon	reduce by rule 9
+
+
+	.	error
+
+
+state 19:
+
+	Type : Int .  (reduce by rule 8)
+
+	Identifier	reduce by rule 8
+	SemiColon	reduce by rule 8
+
+
+	.	error
+
+
+state 20:
+
+	ClassVarDec : Field Type . VarNameList SemiColon 
+
+	Identifier	shift 27
+	SemiColon	reduce by rule 7
+
+	VarNameList	goto 28
+
+	.	error
+
+
+state 21:
+
+	ClassDec : Class Identifier LCurly ClassVarDecList SubroutineDecList RCurly .  (reduce by rule 0)
+
+	EOF	reduce by rule 0
+
+
+	.	error
+
+
+state 22:
+
+	SubroutineDecList : SubroutineDec SubroutineDecList .  (reduce by rule 13)
+
+	RCurly	reduce by rule 13
+
+
+	.	error
+
+
+state 23:
+
+	SubroutineDec : Method Type . Identifier LParen ParameterList RParen LCurly VarDecList Statements RCurly 
+
+	Identifier	shift 29
+
+
+	.	error
+
+
+state 24:
+
+	SubroutineDec : Function Type . Identifier LParen ParameterList RParen LCurly VarDecList Statements RCurly 
+
+	Identifier	shift 30
+
+
+	.	error
+
+
+state 25:
+
+	SubroutineDec : Constructor Type . Identifier LParen ParameterList RParen LCurly VarDecList Statements RCurly 
+
+	Identifier	shift 31
+
+
+	.	error
+
+
+state 26:
+
+	ClassVarDec : Static Type VarNameList . SemiColon 
+
+	SemiColon	shift 32
+
+
+	.	error
+
+
+state 27:
+
+	VarNameList : Identifier .  (reduce by rule 5)
+	VarNameList : Identifier . Comma VarNameList 
+
+	Comma	shift 33
+	SemiColon	reduce by rule 5
+
+
+	.	error
+
+
+state 28:
+
+	ClassVarDec : Field Type VarNameList . SemiColon 
+
+	SemiColon	shift 34
+
+
+	.	error
+
+
+state 29:
+
+	SubroutineDec : Method Type Identifier . LParen ParameterList RParen LCurly VarDecList Statements RCurly 
+
+	LParen	shift 35
+
+
+	.	error
+
+
+state 30:
+
+	SubroutineDec : Function Type Identifier . LParen ParameterList RParen LCurly VarDecList Statements RCurly 
+
+	LParen	shift 36
+
+
+	.	error
+
+
+state 31:
+
+	SubroutineDec : Constructor Type Identifier . LParen ParameterList RParen LCurly VarDecList Statements RCurly 
+
+	LParen	shift 37
+
+
+	.	error
+
+
+state 32:
+
+	ClassVarDec : Static Type VarNameList SemiColon .  (reduce by rule 3)
+
+	Constructor	reduce by rule 3
+	Function	reduce by rule 3
+	Method	reduce by rule 3
+	Field	reduce by rule 3
+	Static	reduce by rule 3
+	RCurly	reduce by rule 3
+
+
+	.	error
+
+
+state 33:
+
+	VarNameList : Identifier Comma . VarNameList 
+
+	Identifier	shift 27
+	SemiColon	reduce by rule 7
+
+	VarNameList	goto 38
+
+	.	error
+
+
+state 34:
+
+	ClassVarDec : Field Type VarNameList SemiColon .  (reduce by rule 4)
+
+	Constructor	reduce by rule 4
+	Function	reduce by rule 4
+	Method	reduce by rule 4
+	Field	reduce by rule 4
+	Static	reduce by rule 4
+	RCurly	reduce by rule 4
+
+
+	.	error
+
+
+state 35:
+
+	SubroutineDec : Method Type Identifier LParen . ParameterList RParen LCurly VarDecList Statements RCurly 
+
+	Int	shift 19
+	Char	shift 18
+	Boolean	shift 17
+	Void	shift 16
+	Identifier	shift 15
+	RParen	reduce by rule 20
+
+	Type	goto 41
+	ParameterList	goto 40
+	Parameter	goto 39
+
+	.	error
+
+
+state 36:
+
+	SubroutineDec : Function Type Identifier LParen . ParameterList RParen LCurly VarDecList Statements RCurly 
+
+	Int	shift 19
+	Char	shift 18
+	Boolean	shift 17
+	Void	shift 16
+	Identifier	shift 15
+	RParen	reduce by rule 20
+
+	Type	goto 41
+	ParameterList	goto 42
+	Parameter	goto 39
+
+	.	error
+
+
+state 37:
+
+	SubroutineDec : Constructor Type Identifier LParen . ParameterList RParen LCurly VarDecList Statements RCurly 
+
+	Int	shift 19
+	Char	shift 18
+	Boolean	shift 17
+	Void	shift 16
+	Identifier	shift 15
+	RParen	reduce by rule 20
+
+	Type	goto 41
+	ParameterList	goto 43
+	Parameter	goto 39
+
+	.	error
+
+
+state 38:
+
+	VarNameList : Identifier Comma VarNameList .  (reduce by rule 6)
+
+	SemiColon	reduce by rule 6
+
+
+	.	error
+
+
+state 39:
+
+	ParameterList : Parameter .  (reduce by rule 18)
+	ParameterList : Parameter . Comma ParameterList 
+
+	Comma	shift 44
+	RParen	reduce by rule 18
+
+
+	.	error
+
+
+state 40:
+
+	SubroutineDec : Method Type Identifier LParen ParameterList . RParen LCurly VarDecList Statements RCurly 
+
+	RParen	shift 45
+
+
+	.	error
+
+
+state 41:
+
+	Parameter : Type . Identifier 
+
+	Identifier	shift 46
+
+
+	.	error
+
+
+state 42:
+
+	SubroutineDec : Function Type Identifier LParen ParameterList . RParen LCurly VarDecList Statements RCurly 
+
+	RParen	shift 47
+
+
+	.	error
+
+
+state 43:
+
+	SubroutineDec : Constructor Type Identifier LParen ParameterList . RParen LCurly VarDecList Statements RCurly 
+
+	RParen	shift 48
+
+
+	.	error
+
+
+state 44:
+
+	ParameterList : Parameter Comma . ParameterList 
+
+	Int	shift 19
+	Char	shift 18
+	Boolean	shift 17
+	Void	shift 16
+	Identifier	shift 15
+	RParen	reduce by rule 20
+
+	Type	goto 41
+	ParameterList	goto 49
+	Parameter	goto 39
+
+	.	error
+
+
+state 45:
+
+	SubroutineDec : Method Type Identifier LParen ParameterList RParen . LCurly VarDecList Statements RCurly 
+
+	LCurly	shift 50
+
+
+	.	error
+
+
+state 46:
+
+	Parameter : Type Identifier .  (reduce by rule 21)
+
+	Comma	reduce by rule 21
+	RParen	reduce by rule 21
+
+
+	.	error
+
+
+state 47:
+
+	SubroutineDec : Function Type Identifier LParen ParameterList RParen . LCurly VarDecList Statements RCurly 
+
+	LCurly	shift 51
+
+
+	.	error
+
+
+state 48:
+
+	SubroutineDec : Constructor Type Identifier LParen ParameterList RParen . LCurly VarDecList Statements RCurly 
+
+	LCurly	shift 52
+
+
+	.	error
+
+
+state 49:
+
+	ParameterList : Parameter Comma ParameterList .  (reduce by rule 19)
+
+	RParen	reduce by rule 19
+
+
+	.	error
+
+
+state 50:
+
+	SubroutineDec : Method Type Identifier LParen ParameterList RParen LCurly . VarDecList Statements RCurly 
+
+	Var	shift 55
+	Let	reduce by rule 23
+	Do	reduce by rule 23
+	If	reduce by rule 23
+	While	reduce by rule 23
+	Return	reduce by rule 23
+
+	VarDecList	goto 54
+	VarDec	goto 53
+
+	.	error
+
+
+state 51:
+
+	SubroutineDec : Function Type Identifier LParen ParameterList RParen LCurly . VarDecList Statements RCurly 
+
+	Var	shift 55
+	Let	reduce by rule 23
+	Do	reduce by rule 23
+	If	reduce by rule 23
+	While	reduce by rule 23
+	Return	reduce by rule 23
+
+	VarDecList	goto 56
+	VarDec	goto 53
+
+	.	error
+
+
+state 52:
+
+	SubroutineDec : Constructor Type Identifier LParen ParameterList RParen LCurly . VarDecList Statements RCurly 
+
+	Var	shift 55
+	Let	reduce by rule 23
+	Do	reduce by rule 23
+	If	reduce by rule 23
+	While	reduce by rule 23
+	Return	reduce by rule 23
+
+	VarDecList	goto 57
+	VarDec	goto 53
+
+	.	error
+
+
+state 53:
+
+	VarDecList : VarDec . VarDecList 
+
+	Var	shift 55
+	Let	reduce by rule 23
+	Do	reduce by rule 23
+	If	reduce by rule 23
+	While	reduce by rule 23
+	Return	reduce by rule 23
+
+	VarDecList	goto 58
+	VarDec	goto 53
+
+	.	error
+
+
+state 54:
+
+	SubroutineDec : Method Type Identifier LParen ParameterList RParen LCurly VarDecList . Statements RCurly 
+
+	Let	shift 70
+	Do	shift 69
+	If	shift 68
+	While	shift 67
+	Return	shift 66
+
+	Statements	goto 65
+	Statement	goto 64
+	LetStatement	goto 63
+	IfStatement	goto 62
+	WhileStatement	goto 61
+	DoStatement	goto 60
+	ReturnStatement	goto 59
+
+	.	error
+
+
+state 55:
+
+	VarDec : Var . Type IdentifierList SemiColon 
+
+	Int	shift 19
+	Char	shift 18
+	Boolean	shift 17
+	Void	shift 16
+	Identifier	shift 15
+
+	Type	goto 71
+
+	.	error
+
+
+state 56:
+
+	SubroutineDec : Function Type Identifier LParen ParameterList RParen LCurly VarDecList . Statements RCurly 
+
+	Let	shift 70
+	Do	shift 69
+	If	shift 68
+	While	shift 67
+	Return	shift 66
+
+	Statements	goto 72
+	Statement	goto 64
+	LetStatement	goto 63
+	IfStatement	goto 62
+	WhileStatement	goto 61
+	DoStatement	goto 60
+	ReturnStatement	goto 59
+
+	.	error
+
+
+state 57:
+
+	SubroutineDec : Constructor Type Identifier LParen ParameterList RParen LCurly VarDecList . Statements RCurly 
+
+	Let	shift 70
+	Do	shift 69
+	If	shift 68
+	While	shift 67
+	Return	shift 66
+
+	Statements	goto 73
+	Statement	goto 64
+	LetStatement	goto 63
+	IfStatement	goto 62
+	WhileStatement	goto 61
+	DoStatement	goto 60
+	ReturnStatement	goto 59
+
+	.	error
+
+
+state 58:
+
+	VarDecList : VarDec VarDecList .  (reduce by rule 22)
+
+	Let	reduce by rule 22
+	Do	reduce by rule 22
+	If	reduce by rule 22
+	While	reduce by rule 22
+	Return	reduce by rule 22
+
+
+	.	error
+
+
+state 59:
+
+	Statement : ReturnStatement .  (reduce by rule 34)
+
+	Let	reduce by rule 34
+	Do	reduce by rule 34
+	If	reduce by rule 34
+	While	reduce by rule 34
+	Return	reduce by rule 34
+	RCurly	reduce by rule 34
+
+
+	.	error
+
+
+state 60:
+
+	Statement : DoStatement .  (reduce by rule 33)
+
+	Let	reduce by rule 33
+	Do	reduce by rule 33
+	If	reduce by rule 33
+	While	reduce by rule 33
+	Return	reduce by rule 33
+	RCurly	reduce by rule 33
+
+
+	.	error
+
+
+state 61:
+
+	Statement : WhileStatement .  (reduce by rule 32)
+
+	Let	reduce by rule 32
+	Do	reduce by rule 32
+	If	reduce by rule 32
+	While	reduce by rule 32
+	Return	reduce by rule 32
+	RCurly	reduce by rule 32
+
+
+	.	error
+
+
+state 62:
+
+	Statement : IfStatement .  (reduce by rule 31)
+
+	Let	reduce by rule 31
+	Do	reduce by rule 31
+	If	reduce by rule 31
+	While	reduce by rule 31
+	Return	reduce by rule 31
+	RCurly	reduce by rule 31
+
+
+	.	error
+
+
+state 63:
+
+	Statement : LetStatement .  (reduce by rule 30)
+
+	Let	reduce by rule 30
+	Do	reduce by rule 30
+	If	reduce by rule 30
+	While	reduce by rule 30
+	Return	reduce by rule 30
+	RCurly	reduce by rule 30
+
+
+	.	error
+
+
+state 64:
+
+	Statements : Statement . Statements 
+	Statements : Statement .  (reduce by rule 29)
+
+	Let	shift 70
+	Do	shift 69
+	If	shift 68
+	While	shift 67
+	Return	shift 66
+	RCurly	reduce by rule 29
+
+	Statements	goto 74
+	Statement	goto 64
+	LetStatement	goto 63
+	IfStatement	goto 62
+	WhileStatement	goto 61
+	DoStatement	goto 60
+	ReturnStatement	goto 59
+
+	.	error
+
+
+state 65:
+
+	SubroutineDec : Method Type Identifier LParen ParameterList RParen LCurly VarDecList Statements . RCurly 
+
+	RCurly	shift 75
+
+
+	.	error
+
+
+state 66:
+
+	ReturnStatement : Return . SemiColon 
+	ReturnStatement : Return . Expression SemiColon 
+
+	True	shift 90
+	False	shift 89
+	Null	shift 88
+	This	shift 87
+	IntConstant	shift 86
+	StringConstant	shift 85
+	Identifier	shift 84
+	SemiColon	shift 83
+	LParen	shift 82
+	Minus	shift 81
+	Tilde	shift 80
+
+	Expression	goto 79
+	Term	goto 78
+	SubroutineCall	goto 77
+	KeywordConstant	goto 76
+
+	.	error
+
+
+state 67:
+
+	WhileStatement : While . LParen Expression RParen LCurly Statements RCurly 
+
+	LParen	shift 91
+
+
+	.	error
+
+
+state 68:
+
+	IfStatement : If . LParen Expression RParen LCurly Statements RCurly 
+	IfStatement : If . LParen Expression RParen LCurly Statements RCurly Else LCurly Statements RCurly 
+
+	LParen	shift 92
+
+
+	.	error
+
+
+state 69:
+
+	DoStatement : Do . SubroutineCall SemiColon 
+
+	Identifier	shift 94
+
+	SubroutineCall	goto 93
+
+	.	error
+
+
+state 70:
+
+	LetStatement : Let . Identifier Equals Expression SemiColon 
+	LetStatement : Let . Identifier LSquare Expression RSquare Equals Expression SemiColon 
+
+	Identifier	shift 95
+
+
+	.	error
+
+
+state 71:
+
+	VarDec : Var Type . IdentifierList SemiColon 
+
+	Identifier	shift 97
+	SemiColon	reduce by rule 27
+
+	IdentifierList	goto 96
+
+	.	error
+
+
+state 72:
+
+	SubroutineDec : Function Type Identifier LParen ParameterList RParen LCurly VarDecList Statements . RCurly 
+
+	RCurly	shift 98
+
+
+	.	error
+
+
+state 73:
+
+	SubroutineDec : Constructor Type Identifier LParen ParameterList RParen LCurly VarDecList Statements . RCurly 
+
+	RCurly	shift 99
+
+
+	.	error
+
+
+state 74:
+
+	Statements : Statement Statements .  (reduce by rule 28)
+
+	RCurly	reduce by rule 28
+
+
+	.	error
+
+
+state 75:
+
+	SubroutineDec : Method Type Identifier LParen ParameterList RParen LCurly VarDecList Statements RCurly .  (reduce by rule 17)
+
+	Constructor	reduce by rule 17
+	Function	reduce by rule 17
+	Method	reduce by rule 17
+	RCurly	reduce by rule 17
+
+
+	.	error
+
+
+state 76:
+
+	Term : KeywordConstant .  (reduce by rule 57)
+
+	RSquare	reduce by rule 57
+	Comma	reduce by rule 57
+	SemiColon	reduce by rule 57
+	Ampersand	reduce by rule 57
+	Pipe	reduce by rule 57
+	RParen	reduce by rule 57
+	Equals	reduce by rule 57
+	Plus	reduce by rule 57
+	Minus	reduce by rule 57
+	Times	reduce by rule 57
+	Div	reduce by rule 57
+	LessThan	reduce by rule 57
+	GreaterThan	reduce by rule 57
+
+
+	.	error
+
+
+state 77:
+
+	Term : SubroutineCall .  (reduce by rule 59)
+
+	RSquare	reduce by rule 59
+	Comma	reduce by rule 59
+	SemiColon	reduce by rule 59
+	Ampersand	reduce by rule 59
+	Pipe	reduce by rule 59
+	RParen	reduce by rule 59
+	Equals	reduce by rule 59
+	Plus	reduce by rule 59
+	Minus	reduce by rule 59
+	Times	reduce by rule 59
+	Div	reduce by rule 59
+	LessThan	reduce by rule 59
+	GreaterThan	reduce by rule 59
+
+
+	.	error
+
+
+state 78:
+
+	Expression : Term .  (reduce by rule 43)
+	Expression : Term . Plus Expression 
+	Expression : Term . Minus Expression 
+	Expression : Term . Times Expression 
+	Expression : Term . Div Expression 
+	Expression : Term . Ampersand Expression 
+	Expression : Term . Pipe Expression 
+	Expression : Term . LessThan Expression 
+	Expression : Term . GreaterThan Expression 
+	Expression : Term . Equals Expression 
+
+	RSquare	reduce by rule 43
+	Comma	reduce by rule 43
+	SemiColon	reduce by rule 43
+	Ampersand	shift 108
+	Pipe	shift 107
+	RParen	reduce by rule 43
+	Equals	shift 106
+	Plus	shift 105
+	Minus	shift 104
+	Times	shift 103
+	Div	shift 102
+	LessThan	shift 101
+	GreaterThan	shift 100
+
+
+	.	error
+
+
+state 79:
+
+	ReturnStatement : Return Expression . SemiColon 
+
+	SemiColon	shift 109
+
+
+	.	error
+
+
+state 80:
+
+	Expression : Tilde . Term 
+
+	True	shift 90
+	False	shift 89
+	Null	shift 88
+	This	shift 87
+	IntConstant	shift 86
+	StringConstant	shift 85
+	Identifier	shift 84
+	LParen	shift 82
+
+	Term	goto 110
+	SubroutineCall	goto 77
+	KeywordConstant	goto 76
+
+	.	error
+
+
+state 81:
+
+	Expression : Minus . Term 
+
+	True	shift 90
+	False	shift 89
+	Null	shift 88
+	This	shift 87
+	IntConstant	shift 86
+	StringConstant	shift 85
+	Identifier	shift 84
+	LParen	shift 82
+
+	Term	goto 111
+	SubroutineCall	goto 77
+	KeywordConstant	goto 76
+
+	.	error
+
+
+state 82:
+
+	Term : LParen . Expression RParen 
+
+	True	shift 90
+	False	shift 89
+	Null	shift 88
+	This	shift 87
+	IntConstant	shift 86
+	StringConstant	shift 85
+	Identifier	shift 84
+	LParen	shift 82
+	Minus	shift 81
+	Tilde	shift 80
+
+	Expression	goto 112
+	Term	goto 78
+	SubroutineCall	goto 77
+	KeywordConstant	goto 76
+
+	.	error
+
+
+state 83:
+
+	ReturnStatement : Return SemiColon .  (reduce by rule 41)
+
+	Let	reduce by rule 41
+	Do	reduce by rule 41
+	If	reduce by rule 41
+	While	reduce by rule 41
+	Return	reduce by rule 41
+	RCurly	reduce by rule 41
+
+
+	.	error
+
+
+state 84:
+
+	Term : Identifier . LSquare Expression RSquare 
+	Term : Identifier .  (reduce by rule 61)
+	SubroutineCall : Identifier . LParen ExpressionList RParen 
+	SubroutineCall : Identifier . Period Identifier LParen ExpressionList RParen 
+
+	LSquare	shift 115
+	RSquare	reduce by rule 61
+	Period	shift 114
+	Comma	reduce by rule 61
+	SemiColon	reduce by rule 61
+	Ampersand	reduce by rule 61
+	Pipe	reduce by rule 61
+	LParen	shift 113
+	RParen	reduce by rule 61
+	Equals	reduce by rule 61
+	Plus	reduce by rule 61
+	Minus	reduce by rule 61
+	Times	reduce by rule 61
+	Div	reduce by rule 61
+	LessThan	reduce by rule 61
+	GreaterThan	reduce by rule 61
+
+
+	.	error
+
+
+state 85:
+
+	Term : StringConstant .  (reduce by rule 56)
+
+	RSquare	reduce by rule 56
+	Comma	reduce by rule 56
+	SemiColon	reduce by rule 56
+	Ampersand	reduce by rule 56
+	Pipe	reduce by rule 56
+	RParen	reduce by rule 56
+	Equals	reduce by rule 56
+	Plus	reduce by rule 56
+	Minus	reduce by rule 56
+	Times	reduce by rule 56
+	Div	reduce by rule 56
+	LessThan	reduce by rule 56
+	GreaterThan	reduce by rule 56
+
+
+	.	error
+
+
+state 86:
+
+	Term : IntConstant .  (reduce by rule 55)
+
+	RSquare	reduce by rule 55
+	Comma	reduce by rule 55
+	SemiColon	reduce by rule 55
+	Ampersand	reduce by rule 55
+	Pipe	reduce by rule 55
+	RParen	reduce by rule 55
+	Equals	reduce by rule 55
+	Plus	reduce by rule 55
+	Minus	reduce by rule 55
+	Times	reduce by rule 55
+	Div	reduce by rule 55
+	LessThan	reduce by rule 55
+	GreaterThan	reduce by rule 55
+
+
+	.	error
+
+
+state 87:
+
+	KeywordConstant : This .  (reduce by rule 70)
+
+	RSquare	reduce by rule 70
+	Comma	reduce by rule 70
+	SemiColon	reduce by rule 70
+	Ampersand	reduce by rule 70
+	Pipe	reduce by rule 70
+	RParen	reduce by rule 70
+	Equals	reduce by rule 70
+	Plus	reduce by rule 70
+	Minus	reduce by rule 70
+	Times	reduce by rule 70
+	Div	reduce by rule 70
+	LessThan	reduce by rule 70
+	GreaterThan	reduce by rule 70
+
+
+	.	error
+
+
+state 88:
+
+	KeywordConstant : Null .  (reduce by rule 69)
+
+	RSquare	reduce by rule 69
+	Comma	reduce by rule 69
+	SemiColon	reduce by rule 69
+	Ampersand	reduce by rule 69
+	Pipe	reduce by rule 69
+	RParen	reduce by rule 69
+	Equals	reduce by rule 69
+	Plus	reduce by rule 69
+	Minus	reduce by rule 69
+	Times	reduce by rule 69
+	Div	reduce by rule 69
+	LessThan	reduce by rule 69
+	GreaterThan	reduce by rule 69
+
+
+	.	error
+
+
+state 89:
+
+	KeywordConstant : False .  (reduce by rule 68)
+
+	RSquare	reduce by rule 68
+	Comma	reduce by rule 68
+	SemiColon	reduce by rule 68
+	Ampersand	reduce by rule 68
+	Pipe	reduce by rule 68
+	RParen	reduce by rule 68
+	Equals	reduce by rule 68
+	Plus	reduce by rule 68
+	Minus	reduce by rule 68
+	Times	reduce by rule 68
+	Div	reduce by rule 68
+	LessThan	reduce by rule 68
+	GreaterThan	reduce by rule 68
+
+
+	.	error
+
+
+state 90:
+
+	KeywordConstant : True .  (reduce by rule 67)
+
+	RSquare	reduce by rule 67
+	Comma	reduce by rule 67
+	SemiColon	reduce by rule 67
+	Ampersand	reduce by rule 67
+	Pipe	reduce by rule 67
+	RParen	reduce by rule 67
+	Equals	reduce by rule 67
+	Plus	reduce by rule 67
+	Minus	reduce by rule 67
+	Times	reduce by rule 67
+	Div	reduce by rule 67
+	LessThan	reduce by rule 67
+	GreaterThan	reduce by rule 67
+
+
+	.	error
+
+
+state 91:
+
+	WhileStatement : While LParen . Expression RParen LCurly Statements RCurly 
+
+	True	shift 90
+	False	shift 89
+	Null	shift 88
+	This	shift 87
+	IntConstant	shift 86
+	StringConstant	shift 85
+	Identifier	shift 84
+	LParen	shift 82
+	Minus	shift 81
+	Tilde	shift 80
+
+	Expression	goto 116
+	Term	goto 78
+	SubroutineCall	goto 77
+	KeywordConstant	goto 76
+
+	.	error
+
+
+state 92:
+
+	IfStatement : If LParen . Expression RParen LCurly Statements RCurly 
+	IfStatement : If LParen . Expression RParen LCurly Statements RCurly Else LCurly Statements RCurly 
+
+	True	shift 90
+	False	shift 89
+	Null	shift 88
+	This	shift 87
+	IntConstant	shift 86
+	StringConstant	shift 85
+	Identifier	shift 84
+	LParen	shift 82
+	Minus	shift 81
+	Tilde	shift 80
+
+	Expression	goto 117
+	Term	goto 78
+	SubroutineCall	goto 77
+	KeywordConstant	goto 76
+
+	.	error
+
+
+state 93:
+
+	DoStatement : Do SubroutineCall . SemiColon 
+
+	SemiColon	shift 118
+
+
+	.	error
+
+
+state 94:
+
+	SubroutineCall : Identifier . LParen ExpressionList RParen 
+	SubroutineCall : Identifier . Period Identifier LParen ExpressionList RParen 
+
+	Period	shift 114
+	LParen	shift 113
+
+
+	.	error
+
+
+state 95:
+
+	LetStatement : Let Identifier . Equals Expression SemiColon 
+	LetStatement : Let Identifier . LSquare Expression RSquare Equals Expression SemiColon 
+
+	LSquare	shift 120
+	Equals	shift 119
+
+
+	.	error
+
+
+state 96:
+
+	VarDec : Var Type IdentifierList . SemiColon 
+
+	SemiColon	shift 121
+
+
+	.	error
+
+
+state 97:
+
+	IdentifierList : Identifier .  (reduce by rule 25)
+	IdentifierList : Identifier . Comma IdentifierList 
+
+	Comma	shift 122
+	SemiColon	reduce by rule 25
+
+
+	.	error
+
+
+state 98:
+
+	SubroutineDec : Function Type Identifier LParen ParameterList RParen LCurly VarDecList Statements RCurly .  (reduce by rule 16)
+
+	Constructor	reduce by rule 16
+	Function	reduce by rule 16
+	Method	reduce by rule 16
+	RCurly	reduce by rule 16
+
+
+	.	error
+
+
+state 99:
+
+	SubroutineDec : Constructor Type Identifier LParen ParameterList RParen LCurly VarDecList Statements RCurly .  (reduce by rule 15)
+
+	Constructor	reduce by rule 15
+	Function	reduce by rule 15
+	Method	reduce by rule 15
+	RCurly	reduce by rule 15
+
+
+	.	error
+
+
+state 100:
+
+	Expression : Term GreaterThan . Expression 
+
+	True	shift 90
+	False	shift 89
+	Null	shift 88
+	This	shift 87
+	IntConstant	shift 86
+	StringConstant	shift 85
+	Identifier	shift 84
+	LParen	shift 82
+	Minus	shift 81
+	Tilde	shift 80
+
+	Expression	goto 123
+	Term	goto 78
+	SubroutineCall	goto 77
+	KeywordConstant	goto 76
+
+	.	error
+
+
+state 101:
+
+	Expression : Term LessThan . Expression 
+
+	True	shift 90
+	False	shift 89
+	Null	shift 88
+	This	shift 87
+	IntConstant	shift 86
+	StringConstant	shift 85
+	Identifier	shift 84
+	LParen	shift 82
+	Minus	shift 81
+	Tilde	shift 80
+
+	Expression	goto 124
+	Term	goto 78
+	SubroutineCall	goto 77
+	KeywordConstant	goto 76
+
+	.	error
+
+
+state 102:
+
+	Expression : Term Div . Expression 
+
+	True	shift 90
+	False	shift 89
+	Null	shift 88
+	This	shift 87
+	IntConstant	shift 86
+	StringConstant	shift 85
+	Identifier	shift 84
+	LParen	shift 82
+	Minus	shift 81
+	Tilde	shift 80
+
+	Expression	goto 125
+	Term	goto 78
+	SubroutineCall	goto 77
+	KeywordConstant	goto 76
+
+	.	error
+
+
+state 103:
+
+	Expression : Term Times . Expression 
+
+	True	shift 90
+	False	shift 89
+	Null	shift 88
+	This	shift 87
+	IntConstant	shift 86
+	StringConstant	shift 85
+	Identifier	shift 84
+	LParen	shift 82
+	Minus	shift 81
+	Tilde	shift 80
+
+	Expression	goto 126
+	Term	goto 78
+	SubroutineCall	goto 77
+	KeywordConstant	goto 76
+
+	.	error
+
+
+state 104:
+
+	Expression : Term Minus . Expression 
+
+	True	shift 90
+	False	shift 89
+	Null	shift 88
+	This	shift 87
+	IntConstant	shift 86
+	StringConstant	shift 85
+	Identifier	shift 84
+	LParen	shift 82
+	Minus	shift 81
+	Tilde	shift 80
+
+	Expression	goto 127
+	Term	goto 78
+	SubroutineCall	goto 77
+	KeywordConstant	goto 76
+
+	.	error
+
+
+state 105:
+
+	Expression : Term Plus . Expression 
+
+	True	shift 90
+	False	shift 89
+	Null	shift 88
+	This	shift 87
+	IntConstant	shift 86
+	StringConstant	shift 85
+	Identifier	shift 84
+	LParen	shift 82
+	Minus	shift 81
+	Tilde	shift 80
+
+	Expression	goto 128
+	Term	goto 78
+	SubroutineCall	goto 77
+	KeywordConstant	goto 76
+
+	.	error
+
+
+state 106:
+
+	Expression : Term Equals . Expression 
+
+	True	shift 90
+	False	shift 89
+	Null	shift 88
+	This	shift 87
+	IntConstant	shift 86
+	StringConstant	shift 85
+	Identifier	shift 84
+	LParen	shift 82
+	Minus	shift 81
+	Tilde	shift 80
+
+	Expression	goto 129
+	Term	goto 78
+	SubroutineCall	goto 77
+	KeywordConstant	goto 76
+
+	.	error
+
+
+state 107:
+
+	Expression : Term Pipe . Expression 
+
+	True	shift 90
+	False	shift 89
+	Null	shift 88
+	This	shift 87
+	IntConstant	shift 86
+	StringConstant	shift 85
+	Identifier	shift 84
+	LParen	shift 82
+	Minus	shift 81
+	Tilde	shift 80
+
+	Expression	goto 130
+	Term	goto 78
+	SubroutineCall	goto 77
+	KeywordConstant	goto 76
+
+	.	error
+
+
+state 108:
+
+	Expression : Term Ampersand . Expression 
+
+	True	shift 90
+	False	shift 89
+	Null	shift 88
+	This	shift 87
+	IntConstant	shift 86
+	StringConstant	shift 85
+	Identifier	shift 84
+	LParen	shift 82
+	Minus	shift 81
+	Tilde	shift 80
+
+	Expression	goto 131
+	Term	goto 78
+	SubroutineCall	goto 77
+	KeywordConstant	goto 76
+
+	.	error
+
+
+state 109:
+
+	ReturnStatement : Return Expression SemiColon .  (reduce by rule 42)
+
+	Let	reduce by rule 42
+	Do	reduce by rule 42
+	If	reduce by rule 42
+	While	reduce by rule 42
+	Return	reduce by rule 42
+	RCurly	reduce by rule 42
+
+
+	.	error
+
+
+state 110:
+
+	Expression : Tilde Term .  (reduce by rule 54)
+
+	RSquare	reduce by rule 54
+	Comma	reduce by rule 54
+	SemiColon	reduce by rule 54
+	RParen	reduce by rule 54
+
+
+	.	error
+
+
+state 111:
+
+	Expression : Minus Term .  (reduce by rule 53)
+
+	RSquare	reduce by rule 53
+	Comma	reduce by rule 53
+	SemiColon	reduce by rule 53
+	RParen	reduce by rule 53
+
+
+	.	error
+
+
+state 112:
+
+	Term : LParen Expression . RParen 
+
+	RParen	shift 132
+
+
+	.	error
+
+
+state 113:
+
+	SubroutineCall : Identifier LParen . ExpressionList RParen 
+
+	True	shift 90
+	False	shift 89
+	Null	shift 88
+	This	shift 87
+	IntConstant	shift 86
+	StringConstant	shift 85
+	Identifier	shift 84
+	LParen	shift 82
+	RParen	reduce by rule 66
+	Minus	shift 81
+	Tilde	shift 80
+
+	Expression	goto 134
+	Term	goto 78
+	SubroutineCall	goto 77
+	ExpressionList	goto 133
+	KeywordConstant	goto 76
+
+	.	error
+
+
+state 114:
+
+	SubroutineCall : Identifier Period . Identifier LParen ExpressionList RParen 
+
+	Identifier	shift 135
+
+
+	.	error
+
+
+state 115:
+
+	Term : Identifier LSquare . Expression RSquare 
+
+	True	shift 90
+	False	shift 89
+	Null	shift 88
+	This	shift 87
+	IntConstant	shift 86
+	StringConstant	shift 85
+	Identifier	shift 84
+	LParen	shift 82
+	Minus	shift 81
+	Tilde	shift 80
+
+	Expression	goto 136
+	Term	goto 78
+	SubroutineCall	goto 77
+	KeywordConstant	goto 76
+
+	.	error
+
+
+state 116:
+
+	WhileStatement : While LParen Expression . RParen LCurly Statements RCurly 
+
+	RParen	shift 137
+
+
+	.	error
+
+
+state 117:
+
+	IfStatement : If LParen Expression . RParen LCurly Statements RCurly 
+	IfStatement : If LParen Expression . RParen LCurly Statements RCurly Else LCurly Statements RCurly 
+
+	RParen	shift 138
+
+
+	.	error
+
+
+state 118:
+
+	DoStatement : Do SubroutineCall SemiColon .  (reduce by rule 40)
+
+	Let	reduce by rule 40
+	Do	reduce by rule 40
+	If	reduce by rule 40
+	While	reduce by rule 40
+	Return	reduce by rule 40
+	RCurly	reduce by rule 40
+
+
+	.	error
+
+
+state 119:
+
+	LetStatement : Let Identifier Equals . Expression SemiColon 
+
+	True	shift 90
+	False	shift 89
+	Null	shift 88
+	This	shift 87
+	IntConstant	shift 86
+	StringConstant	shift 85
+	Identifier	shift 84
+	LParen	shift 82
+	Minus	shift 81
+	Tilde	shift 80
+
+	Expression	goto 139
+	Term	goto 78
+	SubroutineCall	goto 77
+	KeywordConstant	goto 76
+
+	.	error
+
+
+state 120:
+
+	LetStatement : Let Identifier LSquare . Expression RSquare Equals Expression SemiColon 
+
+	True	shift 90
+	False	shift 89
+	Null	shift 88
+	This	shift 87
+	IntConstant	shift 86
+	StringConstant	shift 85
+	Identifier	shift 84
+	LParen	shift 82
+	Minus	shift 81
+	Tilde	shift 80
+
+	Expression	goto 140
+	Term	goto 78
+	SubroutineCall	goto 77
+	KeywordConstant	goto 76
+
+	.	error
+
+
+state 121:
+
+	VarDec : Var Type IdentifierList SemiColon .  (reduce by rule 24)
+
+	Var	reduce by rule 24
+	Let	reduce by rule 24
+	Do	reduce by rule 24
+	If	reduce by rule 24
+	While	reduce by rule 24
+	Return	reduce by rule 24
+
+
+	.	error
+
+
+state 122:
+
+	IdentifierList : Identifier Comma . IdentifierList 
+
+	Identifier	shift 97
+	SemiColon	reduce by rule 27
+
+	IdentifierList	goto 141
+
+	.	error
+
+
+state 123:
+
+	Expression : Term GreaterThan Expression .  (reduce by rule 51)
+
+	RSquare	reduce by rule 51
+	Comma	reduce by rule 51
+	SemiColon	reduce by rule 51
+	RParen	reduce by rule 51
+
+
+	.	error
+
+
+state 124:
+
+	Expression : Term LessThan Expression .  (reduce by rule 50)
+
+	RSquare	reduce by rule 50
+	Comma	reduce by rule 50
+	SemiColon	reduce by rule 50
+	RParen	reduce by rule 50
+
+
+	.	error
+
+
+state 125:
+
+	Expression : Term Div Expression .  (reduce by rule 47)
+
+	RSquare	reduce by rule 47
+	Comma	reduce by rule 47
+	SemiColon	reduce by rule 47
+	RParen	reduce by rule 47
+
+
+	.	error
+
+
+state 126:
+
+	Expression : Term Times Expression .  (reduce by rule 46)
+
+	RSquare	reduce by rule 46
+	Comma	reduce by rule 46
+	SemiColon	reduce by rule 46
+	RParen	reduce by rule 46
+
+
+	.	error
+
+
+state 127:
+
+	Expression : Term Minus Expression .  (reduce by rule 45)
+
+	RSquare	reduce by rule 45
+	Comma	reduce by rule 45
+	SemiColon	reduce by rule 45
+	RParen	reduce by rule 45
+
+
+	.	error
+
+
+state 128:
+
+	Expression : Term Plus Expression .  (reduce by rule 44)
+
+	RSquare	reduce by rule 44
+	Comma	reduce by rule 44
+	SemiColon	reduce by rule 44
+	RParen	reduce by rule 44
+
+
+	.	error
+
+
+state 129:
+
+	Expression : Term Equals Expression .  (reduce by rule 52)
+
+	RSquare	reduce by rule 52
+	Comma	reduce by rule 52
+	SemiColon	reduce by rule 52
+	RParen	reduce by rule 52
+
+
+	.	error
+
+
+state 130:
+
+	Expression : Term Pipe Expression .  (reduce by rule 49)
+
+	RSquare	reduce by rule 49
+	Comma	reduce by rule 49
+	SemiColon	reduce by rule 49
+	RParen	reduce by rule 49
+
+
+	.	error
+
+
+state 131:
+
+	Expression : Term Ampersand Expression .  (reduce by rule 48)
+
+	RSquare	reduce by rule 48
+	Comma	reduce by rule 48
+	SemiColon	reduce by rule 48
+	RParen	reduce by rule 48
+
+
+	.	error
+
+
+state 132:
+
+	Term : LParen Expression RParen .  (reduce by rule 60)
+
+	RSquare	reduce by rule 60
+	Comma	reduce by rule 60
+	SemiColon	reduce by rule 60
+	Ampersand	reduce by rule 60
+	Pipe	reduce by rule 60
+	RParen	reduce by rule 60
+	Equals	reduce by rule 60
+	Plus	reduce by rule 60
+	Minus	reduce by rule 60
+	Times	reduce by rule 60
+	Div	reduce by rule 60
+	LessThan	reduce by rule 60
+	GreaterThan	reduce by rule 60
+
+
+	.	error
+
+
+state 133:
+
+	SubroutineCall : Identifier LParen ExpressionList . RParen 
+
+	RParen	shift 142
+
+
+	.	error
+
+
+state 134:
+
+	ExpressionList : Expression .  (reduce by rule 64)
+	ExpressionList : Expression . Comma ExpressionList 
+
+	Comma	shift 143
+	RParen	reduce by rule 64
+
+
+	.	error
+
+
+state 135:
+
+	SubroutineCall : Identifier Period Identifier . LParen ExpressionList RParen 
+
+	LParen	shift 144
+
+
+	.	error
+
+
+state 136:
+
+	Term : Identifier LSquare Expression . RSquare 
+
+	RSquare	shift 145
+
+
+	.	error
+
+
+state 137:
+
+	WhileStatement : While LParen Expression RParen . LCurly Statements RCurly 
+
+	LCurly	shift 146
+
+
+	.	error
+
+
+state 138:
+
+	IfStatement : If LParen Expression RParen . LCurly Statements RCurly 
+	IfStatement : If LParen Expression RParen . LCurly Statements RCurly Else LCurly Statements RCurly 
+
+	LCurly	shift 147
+
+
+	.	error
+
+
+state 139:
+
+	LetStatement : Let Identifier Equals Expression . SemiColon 
+
+	SemiColon	shift 148
+
+
+	.	error
+
+
+state 140:
+
+	LetStatement : Let Identifier LSquare Expression . RSquare Equals Expression SemiColon 
+
+	RSquare	shift 149
+
+
+	.	error
+
+
+state 141:
+
+	IdentifierList : Identifier Comma IdentifierList .  (reduce by rule 26)
+
+	SemiColon	reduce by rule 26
+
+
+	.	error
+
+
+state 142:
+
+	SubroutineCall : Identifier LParen ExpressionList RParen .  (reduce by rule 62)
+
+	RSquare	reduce by rule 62
+	Comma	reduce by rule 62
+	SemiColon	reduce by rule 62
+	Ampersand	reduce by rule 62
+	Pipe	reduce by rule 62
+	RParen	reduce by rule 62
+	Equals	reduce by rule 62
+	Plus	reduce by rule 62
+	Minus	reduce by rule 62
+	Times	reduce by rule 62
+	Div	reduce by rule 62
+	LessThan	reduce by rule 62
+	GreaterThan	reduce by rule 62
+
+
+	.	error
+
+
+state 143:
+
+	ExpressionList : Expression Comma . ExpressionList 
+
+	True	shift 90
+	False	shift 89
+	Null	shift 88
+	This	shift 87
+	IntConstant	shift 86
+	StringConstant	shift 85
+	Identifier	shift 84
+	LParen	shift 82
+	RParen	reduce by rule 66
+	Minus	shift 81
+	Tilde	shift 80
+
+	Expression	goto 134
+	Term	goto 78
+	SubroutineCall	goto 77
+	ExpressionList	goto 150
+	KeywordConstant	goto 76
+
+	.	error
+
+
+state 144:
+
+	SubroutineCall : Identifier Period Identifier LParen . ExpressionList RParen 
+
+	True	shift 90
+	False	shift 89
+	Null	shift 88
+	This	shift 87
+	IntConstant	shift 86
+	StringConstant	shift 85
+	Identifier	shift 84
+	LParen	shift 82
+	RParen	reduce by rule 66
+	Minus	shift 81
+	Tilde	shift 80
+
+	Expression	goto 134
+	Term	goto 78
+	SubroutineCall	goto 77
+	ExpressionList	goto 151
+	KeywordConstant	goto 76
+
+	.	error
+
+
+state 145:
+
+	Term : Identifier LSquare Expression RSquare .  (reduce by rule 58)
+
+	RSquare	reduce by rule 58
+	Comma	reduce by rule 58
+	SemiColon	reduce by rule 58
+	Ampersand	reduce by rule 58
+	Pipe	reduce by rule 58
+	RParen	reduce by rule 58
+	Equals	reduce by rule 58
+	Plus	reduce by rule 58
+	Minus	reduce by rule 58
+	Times	reduce by rule 58
+	Div	reduce by rule 58
+	LessThan	reduce by rule 58
+	GreaterThan	reduce by rule 58
+
+
+	.	error
+
+
+state 146:
+
+	WhileStatement : While LParen Expression RParen LCurly . Statements RCurly 
+
+	Let	shift 70
+	Do	shift 69
+	If	shift 68
+	While	shift 67
+	Return	shift 66
+
+	Statements	goto 152
+	Statement	goto 64
+	LetStatement	goto 63
+	IfStatement	goto 62
+	WhileStatement	goto 61
+	DoStatement	goto 60
+	ReturnStatement	goto 59
+
+	.	error
+
+
+state 147:
+
+	IfStatement : If LParen Expression RParen LCurly . Statements RCurly 
+	IfStatement : If LParen Expression RParen LCurly . Statements RCurly Else LCurly Statements RCurly 
+
+	Let	shift 70
+	Do	shift 69
+	If	shift 68
+	While	shift 67
+	Return	shift 66
+
+	Statements	goto 153
+	Statement	goto 64
+	LetStatement	goto 63
+	IfStatement	goto 62
+	WhileStatement	goto 61
+	DoStatement	goto 60
+	ReturnStatement	goto 59
+
+	.	error
+
+
+state 148:
+
+	LetStatement : Let Identifier Equals Expression SemiColon .  (reduce by rule 35)
+
+	Let	reduce by rule 35
+	Do	reduce by rule 35
+	If	reduce by rule 35
+	While	reduce by rule 35
+	Return	reduce by rule 35
+	RCurly	reduce by rule 35
+
+
+	.	error
+
+
+state 149:
+
+	LetStatement : Let Identifier LSquare Expression RSquare . Equals Expression SemiColon 
+
+	Equals	shift 154
+
+
+	.	error
+
+
+state 150:
+
+	ExpressionList : Expression Comma ExpressionList .  (reduce by rule 65)
+
+	RParen	reduce by rule 65
+
+
+	.	error
+
+
+state 151:
+
+	SubroutineCall : Identifier Period Identifier LParen ExpressionList . RParen 
+
+	RParen	shift 155
+
+
+	.	error
+
+
+state 152:
+
+	WhileStatement : While LParen Expression RParen LCurly Statements . RCurly 
+
+	RCurly	shift 156
+
+
+	.	error
+
+
+state 153:
+
+	IfStatement : If LParen Expression RParen LCurly Statements . RCurly 
+	IfStatement : If LParen Expression RParen LCurly Statements . RCurly Else LCurly Statements RCurly 
+
+	RCurly	shift 157
+
+
+	.	error
+
+
+state 154:
+
+	LetStatement : Let Identifier LSquare Expression RSquare Equals . Expression SemiColon 
+
+	True	shift 90
+	False	shift 89
+	Null	shift 88
+	This	shift 87
+	IntConstant	shift 86
+	StringConstant	shift 85
+	Identifier	shift 84
+	LParen	shift 82
+	Minus	shift 81
+	Tilde	shift 80
+
+	Expression	goto 158
+	Term	goto 78
+	SubroutineCall	goto 77
+	KeywordConstant	goto 76
+
+	.	error
+
+
+state 155:
+
+	SubroutineCall : Identifier Period Identifier LParen ExpressionList RParen .  (reduce by rule 63)
+
+	RSquare	reduce by rule 63
+	Comma	reduce by rule 63
+	SemiColon	reduce by rule 63
+	Ampersand	reduce by rule 63
+	Pipe	reduce by rule 63
+	RParen	reduce by rule 63
+	Equals	reduce by rule 63
+	Plus	reduce by rule 63
+	Minus	reduce by rule 63
+	Times	reduce by rule 63
+	Div	reduce by rule 63
+	LessThan	reduce by rule 63
+	GreaterThan	reduce by rule 63
+
+
+	.	error
+
+
+state 156:
+
+	WhileStatement : While LParen Expression RParen LCurly Statements RCurly .  (reduce by rule 39)
+
+	Let	reduce by rule 39
+	Do	reduce by rule 39
+	If	reduce by rule 39
+	While	reduce by rule 39
+	Return	reduce by rule 39
+	RCurly	reduce by rule 39
+
+
+	.	error
+
+
+state 157:
+
+	IfStatement : If LParen Expression RParen LCurly Statements RCurly .  (reduce by rule 37)
+	IfStatement : If LParen Expression RParen LCurly Statements RCurly . Else LCurly Statements RCurly 
+
+	Let	reduce by rule 37
+	Do	reduce by rule 37
+	If	reduce by rule 37
+	Else	shift 159
+	While	reduce by rule 37
+	Return	reduce by rule 37
+	RCurly	reduce by rule 37
+
+
+	.	error
+
+
+state 158:
+
+	LetStatement : Let Identifier LSquare Expression RSquare Equals Expression . SemiColon 
+
+	SemiColon	shift 160
+
+
+	.	error
+
+
+state 159:
+
+	IfStatement : If LParen Expression RParen LCurly Statements RCurly Else . LCurly Statements RCurly 
+
+	LCurly	shift 161
+
+
+	.	error
+
+
+state 160:
+
+	LetStatement : Let Identifier LSquare Expression RSquare Equals Expression SemiColon .  (reduce by rule 36)
+
+	Let	reduce by rule 36
+	Do	reduce by rule 36
+	If	reduce by rule 36
+	While	reduce by rule 36
+	Return	reduce by rule 36
+	RCurly	reduce by rule 36
+
+
+	.	error
+
+
+state 161:
+
+	IfStatement : If LParen Expression RParen LCurly Statements RCurly Else LCurly . Statements RCurly 
+
+	Let	shift 70
+	Do	shift 69
+	If	shift 68
+	While	shift 67
+	Return	shift 66
+
+	Statements	goto 162
+	Statement	goto 64
+	LetStatement	goto 63
+	IfStatement	goto 62
+	WhileStatement	goto 61
+	DoStatement	goto 60
+	ReturnStatement	goto 59
+
+	.	error
+
+
+state 162:
+
+	IfStatement : If LParen Expression RParen LCurly Statements RCurly Else LCurly Statements . RCurly 
+
+	RCurly	shift 163
+
+
+	.	error
+
+
+state 163:
+
+	IfStatement : If LParen Expression RParen LCurly Statements RCurly Else LCurly Statements RCurly .  (reduce by rule 38)
+
+	Let	reduce by rule 38
+	Do	reduce by rule 38
+	If	reduce by rule 38
+	While	reduce by rule 38
+	Return	reduce by rule 38
+	RCurly	reduce by rule 38
+
+
+	.	error
+
+
+state 164:
+
+
+	EOF	accept
+
+
+	.	error
+
+508 of 955 action table entries left after compaction
+179 goto table entries

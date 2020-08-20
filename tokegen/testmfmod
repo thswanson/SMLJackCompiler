@@ -1,0 +1,14 @@
+let val base = 1
+in
+  let fun baseouter(b) = base
+  in
+    let fun fact(n) = 
+    	let fun baseinner(b) = baseouter(b)
+    	in
+      	  if n = 0 then baseinner(base) else n * fact(n-1)
+    	end
+    in
+	fact(get)
+    end
+  end
+end

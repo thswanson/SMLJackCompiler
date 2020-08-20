@@ -1,0 +1,11 @@
+let val x =
+  let val x = 5
+  in
+   x + 2
+  end 
+in
+  let val y = 6
+  in
+    x + y
+  end
+end
